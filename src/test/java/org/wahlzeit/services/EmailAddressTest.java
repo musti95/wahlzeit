@@ -20,7 +20,11 @@
 
 package org.wahlzeit.services;
 
+import com.google.appengine.api.datastore.Email;
 import junit.framework.TestCase;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  * Test cases for the EmailAddress class.
@@ -64,6 +68,38 @@ public class EmailAddressTest extends TestCase {
 	 */
 	public void testEmptyEmailAddress() {
 		assertFalse(EmailAddress.EMPTY.isValid());
+	}
+
+	public void testAsInternetAddress() {
+		InternetAddress fromEmail1 = EmailAddress.getFromString("bingo@bongo.com").asInternetAddress();
+		InternetAddress fromEmail2 = EmailAddress.getFromString("bingo.bongo@bongo.com").asInternetAddress();
+		InternetAddress fromEmail3 = EmailAddress.getFromString("bingo+bongo@bango").asInternetAddress();
+		InternetAddress fromEmail4 = EmailAddress.getFromString("bingo@bongo").asInternetAddress();
+		InternetAddress inetAddr1 = null;
+		InternetAddress inetAddr2 = null;
+		InternetAddress inetAddr3 = null;
+		InternetAddress inetAddr4 = null;
+		try {
+			inetAddr1 = new InternetAddress("bingo@bongo.com");
+			inetAddr2 = new InternetAddress("bingo.bongo@bongo.com");
+			inetAddr3 = new InternetAddress("bingo+bongo@bango");
+			inetAddr4 = new InternetAddress("bingo@bongo");
+		} catch (AddressException e){
+			//should not happen
+		}
+		assertEquals(fromEmail1, inetAddr1);
+		assertEquals(fromEmail2, inetAddr2);
+		assertEquals(fromEmail3, inetAddr3);
+		assertEquals(fromEmail4, inetAddr4);
+	}
+
+	public void testValueObject() {
+		EmailAddress mail1 = EmailAddress.getFromString("bingo@bongo.com");
+		EmailAddress mail2 = EmailAddress.getFromString("bingo.bongo@bongo.com");
+		EmailAddress mail3 = EmailAddress.getFromString("bingo@bongo.com");
+		assertNotSame(mail1, mail2);
+		assertNotSame(mail3, mail2);
+		assertSame(mail1, mail3);
 	}
 
 }
