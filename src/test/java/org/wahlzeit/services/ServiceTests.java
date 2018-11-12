@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 		EmailServiceSuite.class,
 		LogBuilderTest.class,
+		PhotoManagerTest.class
 })
 public class ServiceTests {
 }
