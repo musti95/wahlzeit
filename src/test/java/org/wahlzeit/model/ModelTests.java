@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.wahlzeit.model.coordinate.CartesianCoordinateTest;
 import org.wahlzeit.model.persistence.DatastoreAdapterTest;
 
 @RunWith(Suite.class)
@@ -12,7 +13,7 @@ import org.wahlzeit.model.persistence.DatastoreAdapterTest;
 		GuestTest.class,
 		GenderTest.class,
 		FlagReasonTest.class,
-		CoordinateTest.class,
+		CartesianCoordinateTest.class,
 		AccessRightsTest.class,
 		DatastoreAdapterTest.class
 })

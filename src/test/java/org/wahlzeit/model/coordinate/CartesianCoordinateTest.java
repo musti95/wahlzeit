@@ -1,26 +1,26 @@
-package org.wahlzeit.model;
+package org.wahlzeit.model.coordinate;
 
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.Assert;
 
 /**
- * Testclass for {@link Coordinate}.
+ * Testclass for {@link CartesianCoordinate}.
  */
 
-public class CoordinateTest {
+public class CartesianCoordinateTest {
 
 	private static final double EPS = 1E-10;
 
-	private Coordinate origin;
-	private Coordinate c1;
-	private Coordinate c2;
+	private CartesianCoordinate origin;
+	private CartesianCoordinate c1;
+	private CartesianCoordinate c2;
 
 	@Before
 	public void createCoordinates() {
-		origin = new Coordinate(0, 0, 0);
-		c1 = new Coordinate(1.0, 1.0, 1.0);
-		c2 = new Coordinate(1.0, 1.0, 1.0);
+		origin = new CartesianCoordinate(0, 0, 0);
+		c1 = new CartesianCoordinate(1.0, 1.0, 1.0);
+		c2 = new CartesianCoordinate(1.0, 1.0, 1.0);
 	}
 
 	@Test
