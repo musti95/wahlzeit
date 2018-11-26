@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.wahlzeit.model.coordinate.Coordinate.EPS;
+import static org.wahlzeit.model.coordinate.BasicCoordinate.EPS;
 
 public abstract class AbstractCoordinateTest {
 

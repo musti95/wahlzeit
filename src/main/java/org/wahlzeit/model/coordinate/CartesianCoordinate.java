@@ -15,19 +15,7 @@ import java.lang.Math;
 /**
  * A three dimensional point represented in cartesian coordinates.
  */
-public final class CartesianCoordinate implements Coordinate {
-
-	/**
-	 * Calculate the square of the difference of two values.
-	 *
-	 * @param a A double value
-	 * @param b A double value
-	 * @return (a - b)^2
-	 */
-	private static double squaredDifference(double a, double b) {
-		return (a - b) * (a - b);
-	}
-
+public final class CartesianCoordinate extends BasicCoordinate {
 	private final double x;
 	private final double y;
 	private final double z;
@@ -56,37 +44,6 @@ public final class CartesianCoordinate implements Coordinate {
 		double theta = r == 0.0 ? 0.0 : Math.acos(z / r);
 		double phi = Math.atan2(y, x);
 		return new SphericCoordinate(r, theta, phi);
-	}
-
-	@Override
-	public double getCartesianDistance(Coordinate coordinate) {
-		return doGetCartesianDistance(coordinate.asCartesian());
-	}
-
-	private double doGetCartesianDistance(CartesianCoordinate c) {
-		return Math.sqrt(squaredDifference(x, c.x) + squaredDifference(y, c.y) + squaredDifference(z, c.z));
-	}
-
-	@Override
-	public double getCentralAngle(Coordinate coordinate) {
-		return asSpheric().getCentralAngle(coordinate);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Coordinate) {
-			return isEqual((Coordinate) obj);
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isEqual(Coordinate coordinate) {
-		return isEqual(coordinate.asCartesian());
-	}
-
-	private boolean isEqual(CartesianCoordinate c) {
-		return Coordinate.doubleEqual(x, c.x) && Coordinate.doubleEqual(y, c.y) && Coordinate.doubleEqual(z, c.z);
 	}
 
 	/**

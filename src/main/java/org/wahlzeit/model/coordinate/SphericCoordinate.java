@@ -13,7 +13,7 @@ package org.wahlzeit.model.coordinate;
 /**
  * A three dimensional point represented in spherical coordinates.
  */
-public final class SphericCoordinate implements Coordinate {
+public final class SphericCoordinate extends BasicCoordinate {
 
 	/**
 	 * Check that the provided arguments can be used to construct a valid spherical coordinate.
@@ -32,21 +32,6 @@ public final class SphericCoordinate implements Coordinate {
 		}
 		if (phi < -EPS || phi > 2 * Math.PI + EPS) {
 			throw new IllegalArgumentException("Phi must be between 0 and 2pi.");
-		}
-	}
-
-	/**
-	 * Check that none of the coordinates are the origin.
-	 *
-	 * @param coords Varags coordinates to be checked
-	 * @throws IllegalArgumentException Coordinates are equal
-	 */
-	private static void assertCoordinatesNotOrigin(Coordinate... coords) throws IllegalArgumentException {
-		SphericCoordinate origin = new SphericCoordinate(0.0, 0.0, 0.0);
-		for (Coordinate c : coords) {
-			if (c.isEqual(origin)) {
-				throw new IllegalArgumentException("One of the coordinates is the origin.");
-			}
 		}
 	}
 
@@ -79,42 +64,6 @@ public final class SphericCoordinate implements Coordinate {
 	@Override
 	public SphericCoordinate asSpheric() {
 		return this;
-	}
-
-	@Override
-	public double getCartesianDistance(Coordinate coordinate) {
-		return asCartesian().getCartesianDistance(coordinate);
-	}
-
-	@Override
-	public double getCentralAngle(Coordinate coordinate) {
-		assertCoordinatesNotOrigin(this, coordinate);
-		return doGetCentralAngle(coordinate.asSpheric());
-	}
-
-	private double doGetCentralAngle(SphericCoordinate coordinate) {
-		double lat1 = theta - Math.PI / 2;
-		double lat2 = coordinate.theta - Math.PI / 2;
-		double dlong = Math.abs(phi - coordinate.phi);
-		return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dlong));
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Coordinate) {
-			return isEqual((Coordinate) obj);
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isEqual(Coordinate coordinate) {
-		return isEqual(coordinate.asSpheric());
-	}
-
-	private boolean isEqual(SphericCoordinate c) {
-		return Coordinate.doubleEqual(phi, c.phi) && Coordinate.doubleEqual(theta, c.theta)
-				&& Coordinate.doubleEqual(radius, c.radius);
 	}
 
 	/**

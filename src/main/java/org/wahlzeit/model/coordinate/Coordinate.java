@@ -12,22 +12,6 @@ package org.wahlzeit.model.coordinate;
 
 public interface Coordinate {
 	/**
-	 * Threshold for the equality of two double values.
-	 */
-	double EPS = 1E-6;
-
-	/**
-	 * Compare two double values for (almost) equality
-	 *
-	 * @param a double value a
-	 * @param b double value b
-	 * @return true if a is almost equal to b using a threshold EPS
-	 */
-	static boolean doubleEqual(double a, double b) {
-		return Math.abs(a - b) < EPS;
-	}
-
-	/**
 	 * Interpret coordinate as cartesian.
 	 *
 	 * @return {@link CartesianCoordinate} representation
