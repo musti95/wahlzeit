@@ -14,7 +14,7 @@ public abstract class BasicCoordinate implements Coordinate {
 	/**
 	 * Threshold for the equality of two double values.
 	 */
-	protected static final double EPS = 1E-6;
+	static final double EPS = 1E-6;
 
 	/**
 	 * Compare two double values for (almost) equality
@@ -23,7 +23,7 @@ public abstract class BasicCoordinate implements Coordinate {
 	 * @param b double value b
 	 * @return true if a is almost equal to b using a threshold EPS
 	 */
-	protected static boolean doubleEqual(double a, double b) {
+	static boolean doubleEqual(double a, double b) {
 		return Math.abs(a - b) < EPS;
 	}
 
@@ -34,45 +34,24 @@ public abstract class BasicCoordinate implements Coordinate {
 	 * @param b A double value
 	 * @return (a - b)^2
 	 */
-	private static double squaredDifference(double a, double b) {
+	static double squaredDifference(double a, double b) {
 		return (a - b) * (a - b);
 	}
 
 	/**
-	 * Calculate the cartesian distance between two cartesian coordinates.
-	 *
-	 * @param c1 one of the coordinates
-	 * @param c2 the other coordinate
-	 * @return distance between them
+	 * Assert that a coordinate object is not null.
+	 * @param coordinate coordinate
 	 */
-	private static double doGetCartesianDistance(CartesianCoordinate c1, CartesianCoordinate c2) {
-		return Math.sqrt(squaredDifference(c1.getX(), c2.getX()) + squaredDifference(c1.getY(), c2.getY())
-				+ squaredDifference(c1.getZ(), c2.getZ()));
+	private static void assertNotNull(Coordinate coordinate){
+		assert coordinate != null;
 	}
 
 	/**
-	 * Calculate the central angle between two coordinates.
-	 *
-	 * @param c1 one of the coordinates
-	 * @param c2 the other coordinate
-	 * @return central angle between them
+	 * Assert that a double value is actually a number.
+	 * @param val value
 	 */
-	private static double doGetCentralAngle(SphericCoordinate c1, SphericCoordinate c2) {
-		double lat1 = c1.getTheta() - Math.PI / 2;
-		double lat2 = c2.getTheta() - Math.PI / 2;
-		double dlong = Math.abs(c1.getPhi() - c2.getPhi());
-		return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dlong));
-	}
-
-	/**
-	 * Check if two coordinates are equal.
-	 *
-	 * @param c1 one of the coordinates
-	 * @param c2 the other coordinate
-	 * @return true if coordiantes are equal
-	 */
-	private static boolean isEqual(CartesianCoordinate c1, CartesianCoordinate c2) {
-		return doubleEqual(c1.getX(), c2.getX()) && doubleEqual(c1.getY(), c2.getY()) && doubleEqual(c1.getZ(), c2.getZ());
+	static void assertIsNumber(double val){
+		assert Double.isFinite(val);
 	}
 
 	/**
@@ -90,6 +69,11 @@ public abstract class BasicCoordinate implements Coordinate {
 		}
 	}
 
+	/**
+	 * Assert that class invariants hold.
+	 */
+	abstract void assertClassInvariants();
+
 	@Override
 	public abstract CartesianCoordinate asCartesian();
 
@@ -98,13 +82,27 @@ public abstract class BasicCoordinate implements Coordinate {
 
 	@Override
 	public double getCartesianDistance(Coordinate coordinate) {
-		return doGetCartesianDistance(this.asCartesian(), coordinate.asCartesian());
+		assertClassInvariants();
+		assertNotNull(coordinate);
+
+		double result = this.asCartesian().doGetCartesianDistance(coordinate.asCartesian());
+
+		assertIsNumber(result);
+		assertClassInvariants();
+		return result;
 	}
 
 	@Override
 	public double getCentralAngle(Coordinate coordinate) {
+		assertClassInvariants();
+		assertNotNull(coordinate);
 		assertCoordinatesNotOrigin(this, coordinate);
-		return doGetCentralAngle(this.asSpheric(), coordinate.asSpheric());
+
+		double result = this.asSpheric().doGetCentralAngle(coordinate.asSpheric());
+
+		assertIsNumber(result);
+		assertClassInvariants();
+		return result;
 	}
 
 	@Override
@@ -117,6 +115,6 @@ public abstract class BasicCoordinate implements Coordinate {
 
 	@Override
 	public boolean isEqual(Coordinate coordinate) {
-		return isEqual(this.asCartesian(), coordinate.asCartesian());
+		return doubleEqual(this.getCartesianDistance(coordinate), 0.0);
 	}
 }

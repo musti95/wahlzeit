@@ -23,7 +23,7 @@ public final class SphericCoordinate extends BasicCoordinate {
 	 * @param phi    Azimuth Phi
 	 * @throws IllegalArgumentException Arguments are not valid
 	 */
-	private static void assertValidConstructorArguments(double radius, double theta, double phi) throws IllegalArgumentException {
+	private static void assertValidCoordinateValues(double radius, double theta, double phi) throws IllegalArgumentException {
 		if (radius < -EPS) {
 			throw new IllegalArgumentException("Radius can't be negative.");
 		}
@@ -33,6 +33,15 @@ public final class SphericCoordinate extends BasicCoordinate {
 		if (phi < -EPS || phi > 2 * Math.PI + EPS) {
 			throw new IllegalArgumentException("Phi must be between 0 and 2pi.");
 		}
+	}
+
+	/**
+	 * Assert that the coordinate is a valid spherical coordinate.
+	 */
+	private void assertValidCoordinate() {
+		assert radius >= -EPS;
+		assert theta >= -EPS && theta < Math.PI + EPS;
+		assert phi >= -EPS && phi < 2 * Math.PI + EPS;
 	}
 
 	private final double phi;
@@ -47,10 +56,11 @@ public final class SphericCoordinate extends BasicCoordinate {
 	 * @param phi    Azimuth in [0, 2pi]
 	 */
 	SphericCoordinate(double radius, double theta, double phi) {
-		assertValidConstructorArguments(radius, theta, phi);
+		assertValidCoordinateValues(radius, theta, phi);
 		this.radius = radius;
 		this.theta = theta;
 		this.phi = phi;
+		assertClassInvariants();
 	}
 
 	@Override
@@ -64,6 +74,27 @@ public final class SphericCoordinate extends BasicCoordinate {
 	@Override
 	public SphericCoordinate asSpheric() {
 		return this;
+	}
+
+	@Override
+	void assertClassInvariants() {
+		assertIsNumber(radius);
+		assertIsNumber(theta);
+		assertIsNumber(phi);
+		assertValidCoordinate();
+	}
+
+	/**
+	 * Calculate the central angle between two coordinates.
+	 *
+	 * @param c second coordinate
+	 * @return central angle between them
+	 */
+	double doGetCentralAngle(SphericCoordinate c) {
+		double lat1 = theta - Math.PI / 2;
+		double lat2 = c.theta - Math.PI / 2;
+		double dlong = Math.abs(phi - c.phi);
+		return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dlong));
 	}
 
 	/**

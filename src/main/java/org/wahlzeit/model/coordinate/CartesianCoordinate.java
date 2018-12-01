@@ -31,6 +31,7 @@ public final class CartesianCoordinate extends BasicCoordinate {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		assertClassInvariants();
 	}
 
 	@Override
@@ -44,6 +45,24 @@ public final class CartesianCoordinate extends BasicCoordinate {
 		double theta = r == 0.0 ? 0.0 : Math.acos(z / r);
 		double phi = Math.atan2(y, x);
 		return new SphericCoordinate(r, theta, phi);
+	}
+
+	@Override
+	void assertClassInvariants() {
+		assertIsNumber(x);
+		assertIsNumber(y);
+		assertIsNumber(z);
+	}
+
+	/**
+	 * Calculate the cartesian distance between two cartesian coordinates.
+	 *
+	 * @param c second coordinate
+	 * @return cartesian distance
+	 */
+	double doGetCartesianDistance(CartesianCoordinate c) {
+		return Math.sqrt(squaredDifference(x, c.x) + squaredDifference(y, c.y)
+				+ squaredDifference(z, c.z));
 	}
 
 	/**
