@@ -65,9 +65,11 @@ public final class SphericCoordinate extends BasicCoordinate {
 
 	@Override
 	public CartesianCoordinate asCartesian() {
+		assertClassInvariants();
 		double x = radius * Math.sin(theta) * Math.cos(phi);
 		double y = radius * Math.sin(theta) * Math.sin(phi);
 		double z = radius * Math.cos(theta);
+		assertClassInvariants();
 		return new CartesianCoordinate(x, y, z);
 	}
 

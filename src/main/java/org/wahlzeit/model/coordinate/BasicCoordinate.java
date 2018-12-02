@@ -85,11 +85,15 @@ public abstract class BasicCoordinate implements Coordinate {
 		assertClassInvariants();
 		assertNotNull(coordinate);
 
-		double result = this.asCartesian().doGetCartesianDistance(coordinate.asCartesian());
+		double result = doGetCartesianDistance(coordinate);
 
 		assertIsNumber(result);
 		assertClassInvariants();
 		return result;
+	}
+
+	private double doGetCartesianDistance(Coordinate coordinate) {
+		return this.asCartesian().doGetCartesianDistance(coordinate.asCartesian());
 	}
 
 	@Override
@@ -98,11 +102,15 @@ public abstract class BasicCoordinate implements Coordinate {
 		assertNotNull(coordinate);
 		assertCoordinatesNotOrigin(this, coordinate);
 
-		double result = this.asSpheric().doGetCentralAngle(coordinate.asSpheric());
+		double result = doGetCentralAngle(coordinate);
 
 		assertIsNumber(result);
 		assertClassInvariants();
 		return result;
+	}
+
+	private double doGetCentralAngle(Coordinate coordinate) {
+		return this.asSpheric().doGetCentralAngle(coordinate.asSpheric());
 	}
 
 	@Override
@@ -115,6 +123,13 @@ public abstract class BasicCoordinate implements Coordinate {
 
 	@Override
 	public boolean isEqual(Coordinate coordinate) {
-		return doubleEqual(this.getCartesianDistance(coordinate), 0.0);
+		assertClassInvariants();
+		assertNotNull(coordinate);
+
+		boolean result = doubleEqual(this.doGetCartesianDistance(coordinate), 0.0);
+
+		assertClassInvariants();
+		return result;
+
 	}
 }
