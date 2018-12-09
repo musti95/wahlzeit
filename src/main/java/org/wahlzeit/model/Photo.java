@@ -131,7 +131,7 @@ public class Photo extends DataObject {
 	@Parent
 	Key parent = ObjectManager.applicationRootKey;
 
-	protected Location location = null;
+	protected Location location;
 
 	/**
 	 *
@@ -144,8 +144,9 @@ public class Photo extends DataObject {
 	/**
 	 * @methodtype constructor
 	 */
-	public Photo(PhotoId myId) {
+	public Photo(PhotoId myId, Location location) {
 		id = myId;
+		this.location = location;
 
 		incWriteCount();
 	}

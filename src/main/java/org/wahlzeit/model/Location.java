@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.model.coordinate.CartesianCoordinate;
+import org.wahlzeit.model.coordinate.Coordinate;
 
 /**
  * A location represents the place, where a {@link Photo} has been taken.
@@ -9,17 +10,18 @@ public class Location {
 	private CartesianCoordinate coordinate;
 	private String name;
 
-	Location(CartesianCoordinate coordinate, String name) {
-		this.coordinate = coordinate;
+	private Location() { /* for objectify */ }
+	public Location(Coordinate coordinate, String name) {
+		this.coordinate = coordinate.asCartesian();
 		this.name = name;
 	}
 
-	public CartesianCoordinate getCoordinate() {
+	public Coordinate getCoordinate() {
 		return coordinate;
 	}
 
-	public void setCoordinate(CartesianCoordinate coordinate) {
-		this.coordinate = coordinate;
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate.asCartesian();
 	}
 
 	public String getName() {

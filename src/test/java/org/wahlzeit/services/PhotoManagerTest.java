@@ -7,6 +7,7 @@ import com.googlecode.objectify.util.Closeable;
 import org.junit.*;
 import org.junit.rules.RuleChain;
 import org.wahlzeit.model.*;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.model.persistence.DatastoreAdapter;
 import org.wahlzeit.model.persistence.ImageStorage;
 import org.wahlzeit.testEnvironmentProvider.*;
@@ -42,7 +43,7 @@ public class PhotoManagerTest {
     public void testSaveAndLoadGuitaristPhoto() throws Exception {
         PhotoManager pm = PhotoManager.getInstance();
         String photoPath = "src/main/resources/pictures/satriani.jpg";
-        Photo test = pm.createPhoto("guitarist", ImagesServiceFactory.makeImage(Files.readAllBytes(Paths.get(photoPath))));
+        Photo test = pm.createPhoto("guitarist", ImagesServiceFactory.makeImage(Files.readAllBytes(Paths.get(photoPath))), new Location(new CartesianCoordinate(1, 1, 1), "Test"));
         Assert.assertTrue(pm.hasPhoto(test.getId()));
         Assert.assertTrue(pm.getPhoto(test.getId()) instanceof GuitaristPhoto);
 
@@ -56,5 +57,9 @@ public class PhotoManagerTest {
         pm.loadPhotos();
         Assert.assertTrue(pm.hasPhoto(test.getId()));
         Assert.assertTrue(pm.getPhoto(test.getId()) instanceof GuitaristPhoto);
+
+        Location loc = pm.getPhoto(test.getId()).getLocation();
+        Assert.assertEquals(new CartesianCoordinate(1, 1, 1), loc.getCoordinate());
+        Assert.assertEquals("Test", loc.getName());
     }
 }

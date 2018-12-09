@@ -11,11 +11,11 @@ public class GuitaristPhotoFactory extends PhotoFactory {
 	}
 
 	@Override
-	public GuitaristPhoto createPhoto(PhotoId id) {
-		return new GuitaristPhoto(id);
+	public GuitaristPhoto createPhoto(PhotoId id, Location location) {
+		return new GuitaristPhoto(id, location, "", "");
 	}
 
-	public GuitaristPhoto createPhoto(PhotoId id, String name, String guitar) {
-		return new GuitaristPhoto(id, name, guitar);
+	public GuitaristPhoto createPhoto(PhotoId id, Location location, String name, String guitar) {
+		return new GuitaristPhoto(id, location, name, guitar);
 	}
 }

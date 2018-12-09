@@ -11,12 +11,14 @@ public class GuitaristPhoto extends Photo {
 		super();
 	}
 
-	public GuitaristPhoto(PhotoId myId) {
-		super(myId);
+	public GuitaristPhoto(Photo photo, String name, String guitar) {
+		super(photo.id, photo.location);
+		this.guitar = guitar;
+		this.guitaristName = name;
 	}
 
-	public GuitaristPhoto(PhotoId myId, String name, String guitar){
-		super(myId);
+	public GuitaristPhoto(PhotoId myId, Location location, String name, String guitar){
+		super(myId, location);
 		this.guitaristName = name;
 		this.guitar = guitar;
 	}

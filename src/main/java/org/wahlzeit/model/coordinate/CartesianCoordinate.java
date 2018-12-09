@@ -10,15 +10,19 @@ package org.wahlzeit.model.coordinate;
  * Copyright notice AGPLv3
  */
 
+import com.googlecode.objectify.annotation.Subclass;
+
 import java.lang.Math;
 
 /**
  * A three dimensional point represented in cartesian coordinates.
  */
 public final class CartesianCoordinate extends BasicCoordinate {
-	private final double x;
-	private final double y;
-	private final double z;
+	private double x;
+	private double y;
+	private double z;
+
+	private CartesianCoordinate() { /* just for objectify */ }
 
 	/**
 	 * 3D-Point represented in cartesian coordinates.
@@ -27,7 +31,7 @@ public final class CartesianCoordinate extends BasicCoordinate {
 	 * @param y y-coordinate
 	 * @param z z-coordinate
 	 */
-	CartesianCoordinate(double x, double y, double z) {
+	public CartesianCoordinate(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

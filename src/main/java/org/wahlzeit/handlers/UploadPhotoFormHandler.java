@@ -22,13 +22,8 @@ package org.wahlzeit.handlers;
 
 import com.google.appengine.api.images.Image;
 import org.wahlzeit.agents.AsyncTaskExecutor;
-import org.wahlzeit.model.AccessRights;
-import org.wahlzeit.model.ModelConfig;
-import org.wahlzeit.model.Photo;
-import org.wahlzeit.model.PhotoManager;
-import org.wahlzeit.model.Tags;
-import org.wahlzeit.model.User;
-import org.wahlzeit.model.UserSession;
+import org.wahlzeit.model.*;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.utils.StringUtil;
 import org.wahlzeit.webparts.WebPart;
@@ -77,7 +72,7 @@ public class UploadPhotoFormHandler extends AbstractWebFormHandler {
 			String fileName = us.getAsString(args, "fileName");
 			User user = (User) us.getClient();
 			Image uploadedImage = user.getUploadedImage();
-			Photo photo = pm.createPhoto(fileName, uploadedImage);
+			Photo photo = pm.createPhoto(fileName, uploadedImage, new Location(new CartesianCoordinate(1, 1, 1), "uploadPhoto"));
 
 			user.addPhoto(photo);
 

@@ -23,6 +23,7 @@ package org.wahlzeit.model;
 import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Work;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.model.persistence.ImageStorage;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.ObjectManager;
@@ -336,9 +337,9 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	public Photo createPhoto(String filename, Image uploadedImage) throws Exception {
+	public Photo createPhoto(String filename, Image uploadedImage, Location location) throws Exception {
 		PhotoId id = PhotoId.getNextId();
-		Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage);
+		Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage, location);
 		addPhoto(result);
 		return result;
 	}
