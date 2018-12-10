@@ -24,7 +24,7 @@ public interface Coordinate {
 	 * @param coordinate Second coordinate
 	 * @return Cartesian distance between this and the other coordinate
 	 */
-	double getCartesianDistance(Coordinate coordinate);
+	double getCartesianDistance(Coordinate coordinate) throws IllegalStateException;
 
 	/**
 	 * Interpret coordinate as spherical.
@@ -39,7 +39,7 @@ public interface Coordinate {
 	 * @param coordinate Second coordinate
 	 * @return Central angle between this coordinate the origin and the second coordinate.
 	 */
-	double getCentralAngle(Coordinate coordinate);
+	double getCentralAngle(Coordinate coordinate) throws IllegalArgumentException;
 
 	/**
 	 * Check if two coordinates are equal using their values.

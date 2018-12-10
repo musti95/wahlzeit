@@ -17,7 +17,7 @@ public class GuitaristPhoto extends Photo {
 		this.guitaristName = name;
 	}
 
-	public GuitaristPhoto(PhotoId myId, Location location, String name, String guitar){
+	public GuitaristPhoto(PhotoId myId, Location location, String name, String guitar) {
 		super(myId, location);
 		this.guitaristName = name;
 		this.guitar = guitar;

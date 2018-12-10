@@ -59,7 +59,7 @@ public class PhotoManagerTest {
         Assert.assertTrue(pm.getPhoto(test.getId()) instanceof GuitaristPhoto);
 
         Location loc = pm.getPhoto(test.getId()).getLocation();
-        Assert.assertEquals(new CartesianCoordinate(1, 1, 1), loc.getCoordinate());
+        Assert.assertEquals(new CartesianCoordinate(0, 0, 0), loc.getCoordinate());
         Assert.assertEquals("Test", loc.getName());
     }
 }

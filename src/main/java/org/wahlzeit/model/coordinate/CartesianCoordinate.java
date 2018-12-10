@@ -18,11 +18,9 @@ import java.lang.Math;
  * A three dimensional point represented in cartesian coordinates.
  */
 public final class CartesianCoordinate extends BasicCoordinate {
-	private double x;
-	private double y;
-	private double z;
-
-	private CartesianCoordinate() { /* just for objectify */ }
+	private final double x;
+	private final double y;
+	private final double z;
 
 	/**
 	 * 3D-Point represented in cartesian coordinates.

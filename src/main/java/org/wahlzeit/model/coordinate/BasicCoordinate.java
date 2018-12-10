@@ -42,8 +42,10 @@ public abstract class BasicCoordinate implements Coordinate {
 	 * Assert that a coordinate object is not null.
 	 * @param coordinate coordinate
 	 */
-	private static void assertNotNull(Coordinate coordinate){
-		assert coordinate != null;
+	private static void assertNotNull(Coordinate coordinate) throws IllegalArgumentException {
+		if (coordinate == null) {
+			throw new IllegalArgumentException("Coordinate can't be null.");
+		}
 	}
 
 	/**
@@ -81,7 +83,7 @@ public abstract class BasicCoordinate implements Coordinate {
 	public abstract SphericCoordinate asSpheric();
 
 	@Override
-	public double getCartesianDistance(Coordinate coordinate) {
+	public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
 		assertClassInvariants();
 		assertNotNull(coordinate);
 
@@ -97,7 +99,7 @@ public abstract class BasicCoordinate implements Coordinate {
 	}
 
 	@Override
-	public double getCentralAngle(Coordinate coordinate) {
+	public double getCentralAngle(Coordinate coordinate) throws IllegalArgumentException {
 		assertClassInvariants();
 		assertNotNull(coordinate);
 		assertCoordinatesNotOrigin(this, coordinate);

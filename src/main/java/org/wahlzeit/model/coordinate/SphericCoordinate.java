@@ -46,9 +46,9 @@ public final class SphericCoordinate extends BasicCoordinate {
 		assert phi >= -EPS && phi < 2 * Math.PI + EPS;
 	}
 
-	private double phi;
-	private double theta;
-	private double radius;
+	private final double phi;
+	private final double theta;
+	private final double radius;
 
 	/**
 	 * 3D-Point represented in spherical coordinates.
@@ -57,7 +57,7 @@ public final class SphericCoordinate extends BasicCoordinate {
 	 * @param theta  Inclination in [0, pi]
 	 * @param phi    Azimuth in [0, 2pi]
 	 */
-	public SphericCoordinate(double radius, double theta, double phi) {
+	public SphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
 		assertValidCoordinateValues(radius, theta, phi);
 		this.radius = radius;
 		this.theta = theta;
