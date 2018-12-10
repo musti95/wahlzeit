@@ -339,9 +339,14 @@ public class PhotoManager extends ObjectManager {
 	 */
 	public Photo createPhoto(String filename, Image uploadedImage, Location location) throws Exception {
 		PhotoId id = PhotoId.getNextId();
-		Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage, location);
-		addPhoto(result);
-		return result;
+		try {
+			Photo result = PhotoUtil.createPhoto(filename, id, uploadedImage, location);
+			addPhoto(result);
+			return result;
+		} catch (IllegalArgumentException e) {
+			log.warning("Photo could not be created");
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**
