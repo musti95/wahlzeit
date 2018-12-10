@@ -11,7 +11,10 @@ public class GuitaristPhotoFactory extends PhotoFactory {
 	}
 
 	@Override
-	public GuitaristPhoto createPhoto(PhotoId id, Location location) {
+	public GuitaristPhoto createPhoto(PhotoId id, Location location) throws IllegalArgumentException {
+		if(location == null) {
+			throw new IllegalArgumentException("Location can't be null.");
+		}
 		return new GuitaristPhoto(id, location, "", "");
 	}
 

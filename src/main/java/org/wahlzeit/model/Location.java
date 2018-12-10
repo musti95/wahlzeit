@@ -18,7 +18,10 @@ public class Location {
         coordinate = new CartesianCoordinate(0, 0, 0);
     }
 
-    public Location(Coordinate coordinate, String name) {
+    public Location(Coordinate coordinate, String name) throws IllegalArgumentException {
+        if (coordinate == null) {
+            throw new IllegalArgumentException("Coordinate can't be null.");
+        }
         this.coordinate = coordinate.asCartesian();
         this.name = name;
     }
