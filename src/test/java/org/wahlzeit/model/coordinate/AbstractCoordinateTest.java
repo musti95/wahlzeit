@@ -87,14 +87,20 @@ public abstract class AbstractCoordinateTest {
 		Assert.assertEquals(Math.sqrt(2 + Math.sqrt(2)), c1.getCartesianDistance(c2), EPS);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void TestinvalidGetCentralAngle() {
-		Assert.assertEquals(Math.PI, origin.getCentralAngle(c1), EPS);
-	}
-
 	@Test
 	public void testGetCentralAngle() {
 		Assert.assertEquals(0.0, c1.getCentralAngle(c1), EPS);
 		Assert.assertEquals(3 * Math.PI / 4, c1.getCentralAngle(c2), EPS);
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testinvalidGetCentralAngle() {
+		Assert.assertEquals(Math.PI, origin.getCentralAngle(c1), EPS);
+	}
+
+	@Test
+	public abstract void testValueObjectOriginSame();
+
+	@Test
+	public abstract void testValueObjectCoordinateSame();
 }
