@@ -54,17 +54,17 @@ public abstract class AbstractCoordinateTest {
 
 	@Test
 	public void testIsEqual() {
-		Assert.assertTrue(origin.isEqual(new CartesianCoordinate(0.0, 0.0, 0.0)));
-		Assert.assertTrue(c3.isEqual(new CartesianCoordinate(1.0 / Math.sqrt(2), 0.0, 1.0 / Math.sqrt(2))));
+		Assert.assertTrue(origin.isEqual(CartesianCoordinate.getInstance(0.0, 0.0, 0.0)));
+		Assert.assertTrue(c3.isEqual(CartesianCoordinate.getInstance(1.0 / Math.sqrt(2), 0.0, 1.0 / Math.sqrt(2))));
 
-		Assert.assertTrue(origin.isEqual(new SphericCoordinate(0.0, 0.0, 0.0)));
-		Assert.assertTrue(c3.isEqual(new SphericCoordinate(1.0, Math.PI / 4, 0.0)));
+		Assert.assertTrue(origin.isEqual(SphericCoordinate.getInstance(0.0, 0.0, 0.0)));
+		Assert.assertTrue(c3.isEqual(SphericCoordinate.getInstance(1.0, Math.PI / 4, 0.0)));
 
-		Assert.assertFalse(origin.isEqual(new CartesianCoordinate(-1.0, 0.0, 0.0)));
-		Assert.assertFalse(c1.isEqual(new CartesianCoordinate(0.0, 0.0, 0.0)));
+		Assert.assertFalse(origin.isEqual(CartesianCoordinate.getInstance(-1.0, 0.0, 0.0)));
+		Assert.assertFalse(c1.isEqual(CartesianCoordinate.getInstance(0.0, 0.0, 0.0)));
 
-		Assert.assertFalse(origin.isEqual(new SphericCoordinate(1.0, Math.PI / 2, Math.PI)));
-		Assert.assertFalse(c1.isEqual(new SphericCoordinate(0.0, 0.0, 0.0)));
+		Assert.assertFalse(origin.isEqual(SphericCoordinate.getInstance(1.0, Math.PI / 2, Math.PI)));
+		Assert.assertFalse(c1.isEqual(SphericCoordinate.getInstance(0.0, 0.0, 0.0)));
 	}
 
 	@Test
@@ -72,8 +72,8 @@ public abstract class AbstractCoordinateTest {
 		Assert.assertEquals(origin, origin);
 		Assert.assertEquals(c3, c2);
 
-		Assert.assertEquals(c2, new SphericCoordinate(1.0, Math.PI / 4, 0.0));
-		Assert.assertEquals(c2, new CartesianCoordinate(1.0 / Math.sqrt(2), 0.0, 1.0 / Math.sqrt(2)));
+		Assert.assertEquals(c2, SphericCoordinate.getInstance(1.0, Math.PI / 4, 0.0));
+		Assert.assertEquals(c2, CartesianCoordinate.getInstance(1.0 / Math.sqrt(2), 0.0, 1.0 / Math.sqrt(2)));
 
 		Assert.assertNotEquals(origin, new Object());
 		Assert.assertNotEquals(origin, c1);

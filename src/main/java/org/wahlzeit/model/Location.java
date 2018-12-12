@@ -15,7 +15,7 @@ public class Location {
 
     private Location() {
         // for objectify
-        coordinate = new CartesianCoordinate(0, 0, 0);
+        coordinate = CartesianCoordinate.getInstance(0, 0, 0);
     }
 
     public Location(Coordinate coordinate, String name) throws IllegalArgumentException {

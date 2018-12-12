@@ -14,18 +14,8 @@ public abstract class BasicCoordinate implements Coordinate {
 	/**
 	 * Threshold for the equality of two double values.
 	 */
-	static final double EPS = 1E-6;
-
-	/**
-	 * Compare two double values for (almost) equality
-	 *
-	 * @param a double value a
-	 * @param b double value b
-	 * @return true if a is almost equal to b using a threshold EPS
-	 */
-	static boolean doubleEqual(double a, double b) {
-		return Math.abs(a - b) < EPS;
-	}
+	static final int DEC_PLACE = 6;
+	static final double EPS = 1*Math.pow(10, -DEC_PLACE);
 
 	/**
 	 * Calculate the square of the difference of two values.
@@ -63,7 +53,7 @@ public abstract class BasicCoordinate implements Coordinate {
 	 * @throws IllegalArgumentException Coordinates are equal
 	 */
 	private static void assertCoordinatesNotOrigin(Coordinate... coords) throws IllegalArgumentException {
-		CartesianCoordinate origin = new CartesianCoordinate(0.0, 0.0, 0.0);
+		CartesianCoordinate origin = CartesianCoordinate.getInstance(0.0, 0.0, 0.0);
 		for (Coordinate c : coords) {
 			if (c.isEqual(origin)) {
 				throw new IllegalArgumentException("One of the coordinates is the origin.");
@@ -128,10 +118,26 @@ public abstract class BasicCoordinate implements Coordinate {
 		assertClassInvariants();
 		assertNotNull(coordinate);
 
-		boolean result = doubleEqual(this.doGetCartesianDistance(coordinate), 0.0);
+		//boolean result = doubleEqual(this.doGetCartesianDistance(coordinate), 0.0);
+		boolean result = asCartesian().hashCode() == coordinate.asCartesian().hashCode();
 
 		assertClassInvariants();
 		return result;
+	}
 
+	/**
+	 * Get a unique string representation of the coordinate.
+	 * @return string representation
+	 */
+	public abstract String asString();
+
+	@Override
+	public int hashCode() {
+		return asString().hashCode();
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException("Coordinate is a value type and cannot be cloned.");
 	}
 }

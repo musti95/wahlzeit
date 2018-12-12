@@ -12,10 +12,14 @@ package org.wahlzeit.model.coordinate;
 
 import com.googlecode.objectify.annotation.Subclass;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A three dimensional point represented in spherical coordinates.
  */
 public final class SphericCoordinate extends BasicCoordinate {
+	private static Map<Integer, SphericCoordinate> cache = new HashMap<>();
 
 	/**
 	 * Check that the provided arguments can be used to construct a valid spherical coordinate.
@@ -46,6 +50,27 @@ public final class SphericCoordinate extends BasicCoordinate {
 		assert phi >= -EPS && phi < 2 * Math.PI + EPS;
 	}
 
+	/**
+	 * Get a 3D-Point in space represented in spherical coordinates.
+	 *
+	 * @param radius Radius >= 0
+	 * @param theta  Inclination in [0, pi]
+	 * @param phi    Azimuth in [0, 2pi]
+	 */
+	public static synchronized SphericCoordinate getInstance(double radius, double theta, double phi) throws IllegalArgumentException {
+		Integer key = asString(radius, theta, phi).hashCode();
+		SphericCoordinate entry = cache.get(key);
+		if( entry == null) {
+			entry = new SphericCoordinate(radius, theta, phi);
+			cache.put(key, entry);
+		}
+		return entry;
+	}
+
+	private static String asString(double radius, double theta, double phi) {
+		return String.format("Spheric(%g."+ DEC_PLACE +"%n, %g."+ DEC_PLACE +"%n, %g."+ DEC_PLACE +"%n)" ,radius, theta, phi);
+	}
+
 	private final double phi;
 	private final double theta;
 	private final double radius;
@@ -57,7 +82,7 @@ public final class SphericCoordinate extends BasicCoordinate {
 	 * @param theta  Inclination in [0, pi]
 	 * @param phi    Azimuth in [0, 2pi]
 	 */
-	public SphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
+	private SphericCoordinate(double radius, double theta, double phi) {
 		assertValidCoordinateValues(radius, theta, phi);
 		this.radius = radius;
 		this.theta = theta;
@@ -72,7 +97,7 @@ public final class SphericCoordinate extends BasicCoordinate {
 		double y = radius * Math.sin(theta) * Math.sin(phi);
 		double z = radius * Math.cos(theta);
 		assertClassInvariants();
-		return new CartesianCoordinate(x, y, z);
+		return CartesianCoordinate.getInstance(x, y, z);
 	}
 
 	@Override
@@ -99,6 +124,11 @@ public final class SphericCoordinate extends BasicCoordinate {
 		double lat2 = c.theta - Math.PI / 2;
 		double dlong = Math.abs(phi - c.phi);
 		return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dlong));
+	}
+
+	@Override
+	public String asString() {
+		return asString(radius, theta, phi);
 	}
 
 	/**

@@ -13,11 +13,36 @@ package org.wahlzeit.model.coordinate;
 import com.googlecode.objectify.annotation.Subclass;
 
 import java.lang.Math;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A three dimensional point represented in cartesian coordinates.
  */
 public final class CartesianCoordinate extends BasicCoordinate {
+	private static Map<Integer, CartesianCoordinate> cache = new HashMap<>();
+
+	/**
+	 * Get a 3D-Point in space represented in cartesian coordinates.
+	 *
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @param z z-coordinate
+	 */
+	public static CartesianCoordinate getInstance(double x, double y, double z) {
+		Integer key = asString(x, y, z).hashCode();
+		CartesianCoordinate entry = cache.get(key);
+		if( entry == null) {
+			entry = new CartesianCoordinate(x, y, z);
+			cache.put(key, entry);
+		}
+		return entry;
+	}
+
+	private static String asString(double x, double y, double z) {
+		return String.format("Cartesian(d%g."+ DEC_PLACE +"%n, %g."+ DEC_PLACE +"%n, %g."+ DEC_PLACE +"%n)", x, y, z);
+	}
+
 	private final double x;
 	private final double y;
 	private final double z;
@@ -29,7 +54,7 @@ public final class CartesianCoordinate extends BasicCoordinate {
 	 * @param y y-coordinate
 	 * @param z z-coordinate
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
+	private CartesianCoordinate(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -48,7 +73,7 @@ public final class CartesianCoordinate extends BasicCoordinate {
 		double theta = r == 0.0 ? 0.0 : Math.acos(z / r);
 		double phi = Math.atan2(y, x);
 		assertClassInvariants();
-		return new SphericCoordinate(r, theta, phi);
+		return SphericCoordinate.getInstance(r, theta, phi);
 	}
 
 	@Override
@@ -67,6 +92,11 @@ public final class CartesianCoordinate extends BasicCoordinate {
 	double doGetCartesianDistance(CartesianCoordinate c) {
 		return Math.sqrt(squaredDifference(x, c.x) + squaredDifference(y, c.y)
 				+ squaredDifference(z, c.z));
+	}
+
+	@Override
+	public String asString() {
+	return asString(x, y, z);
 	}
 
 	/**

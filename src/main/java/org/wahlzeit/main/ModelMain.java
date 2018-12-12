@@ -108,7 +108,7 @@ public abstract class ModelMain extends AbstractMain {
 			//TODO: change to datastore/cloud storage
 			try {
 				Image image = getImageFromFile(photo);
-				Photo newPhoto = photoManager.createPhoto(photo.getName(), image, new Location(new SphericCoordinate(1, 1, 1), "newPhoto"));
+				Photo newPhoto = photoManager.createPhoto(photo.getName(), image, new Location(SphericCoordinate.getInstance(1, 1, 1), "newPhoto"));
 				user.addPhoto(newPhoto);
 				userManager.addClient(user);
 			} catch (Exception e) {

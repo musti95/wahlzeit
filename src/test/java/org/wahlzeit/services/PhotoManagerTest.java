@@ -43,7 +43,7 @@ public class PhotoManagerTest {
     public void testSaveAndLoadGuitaristPhoto() throws Exception {
         PhotoManager pm = PhotoManager.getInstance();
         String photoPath = "src/main/resources/pictures/satriani.jpg";
-        Photo test = pm.createPhoto("guitarist", ImagesServiceFactory.makeImage(Files.readAllBytes(Paths.get(photoPath))), new Location(new CartesianCoordinate(1, 1, 1), "Test"));
+        Photo test = pm.createPhoto("guitarist", ImagesServiceFactory.makeImage(Files.readAllBytes(Paths.get(photoPath))), new Location(CartesianCoordinate.getInstance(1, 1, 1), "Test"));
         Assert.assertTrue(pm.hasPhoto(test.getId()));
         Assert.assertTrue(pm.getPhoto(test.getId()) instanceof GuitaristPhoto);
 
@@ -59,7 +59,7 @@ public class PhotoManagerTest {
         Assert.assertTrue(pm.getPhoto(test.getId()) instanceof GuitaristPhoto);
 
         Location loc = pm.getPhoto(test.getId()).getLocation();
-        Assert.assertEquals(new CartesianCoordinate(0, 0, 0), loc.getCoordinate());
+        Assert.assertEquals(CartesianCoordinate.getInstance(0, 0, 0), loc.getCoordinate());
         Assert.assertEquals("Test", loc.getName());
     }
 }
