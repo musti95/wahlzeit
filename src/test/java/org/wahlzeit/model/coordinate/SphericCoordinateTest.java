@@ -17,7 +17,7 @@ public class SphericCoordinateTest extends AbstractCoordinateTest {
 
     @Override
     public void testValueObjectOriginSame() {
-        Assert.assertSame(origin, this.origin = SphericCoordinate.getInstance(0.0, 0.0, 0.0));
+        Assert.assertSame(origin, SphericCoordinate.getInstance(0.0, 0.0, 0.0));
     }
 
     @Override

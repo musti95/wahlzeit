@@ -10,6 +10,9 @@ package org.wahlzeit.model.coordinate;
  * Copyright notice AGPLv3
  */
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public abstract class BasicCoordinate implements Coordinate {
 	/**
 	 * Threshold for the equality of two double values.

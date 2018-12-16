@@ -47,6 +47,8 @@ public final class CartesianCoordinate extends BasicCoordinate {
 	private final double y;
 	private final double z;
 
+	private SphericCoordinate spheric = null;
+
 	/**
 	 * 3D-Point represented in cartesian coordinates.
 	 *
@@ -69,11 +71,14 @@ public final class CartesianCoordinate extends BasicCoordinate {
 	@Override
 	public SphericCoordinate asSpheric() {
 		assertClassInvariants();
-		double r = Math.sqrt(x * x + y * y + z * z);
-		double theta = r == 0.0 ? 0.0 : Math.acos(z / r);
-		double phi = Math.atan2(y, x);
-		assertClassInvariants();
-		return SphericCoordinate.getInstance(r, theta, phi);
+		if (spheric == null) {
+			double r = Math.sqrt(x * x + y * y + z * z);
+			double theta = r == 0.0 ? 0.0 : Math.acos(z / r);
+			double phi = Math.atan2(y, x);
+			spheric = SphericCoordinate.getInstance(r, theta, phi);
+			assertClassInvariants();
+		}
+		return spheric;
 	}
 
 	@Override

@@ -57,7 +57,12 @@ public final class SphericCoordinate extends BasicCoordinate {
 	 * @param theta  Inclination in [0, pi]
 	 * @param phi    Azimuth in [0, 2pi]
 	 */
-	public static synchronized SphericCoordinate getInstance(double radius, double theta, double phi) throws IllegalArgumentException {
+	public static SphericCoordinate getInstance(double radius, double theta, double phi) throws IllegalArgumentException {
+		if (radius == 0.0) {
+			theta = 0.0;
+			phi = 0.0;
+		}
+
 		Integer key = asString(radius, theta, phi).hashCode();
 		SphericCoordinate entry = cache.get(key);
 		if( entry == null) {
@@ -74,6 +79,8 @@ public final class SphericCoordinate extends BasicCoordinate {
 	private final double phi;
 	private final double theta;
 	private final double radius;
+
+	private CartesianCoordinate cartesian = null;
 
 	/**
 	 * 3D-Point represented in spherical coordinates.
@@ -93,11 +100,16 @@ public final class SphericCoordinate extends BasicCoordinate {
 	@Override
 	public CartesianCoordinate asCartesian() {
 		assertClassInvariants();
-		double x = radius * Math.sin(theta) * Math.cos(phi);
-		double y = radius * Math.sin(theta) * Math.sin(phi);
-		double z = radius * Math.cos(theta);
-		assertClassInvariants();
-		return CartesianCoordinate.getInstance(x, y, z);
+		if (cartesian != null) {
+			return cartesian;
+		} else {
+			double x = radius * Math.sin(theta) * Math.cos(phi);
+			double y = radius * Math.sin(theta) * Math.sin(phi);
+			double z = radius * Math.cos(theta);
+			cartesian = CartesianCoordinate.getInstance(x, y, z);
+			assertClassInvariants();
+		}
+		return cartesian;
 	}
 
 	@Override
