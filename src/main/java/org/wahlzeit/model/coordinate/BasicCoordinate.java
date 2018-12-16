@@ -121,8 +121,7 @@ public abstract class BasicCoordinate implements Coordinate {
 		assertClassInvariants();
 		assertNotNull(coordinate);
 
-		//boolean result = doubleEqual(this.doGetCartesianDistance(coordinate), 0.0);
-		boolean result = asCartesian().hashCode() == coordinate.asCartesian().hashCode();
+		boolean result = asCartesian() == coordinate.asCartesian();
 
 		assertClassInvariants();
 		return result;
