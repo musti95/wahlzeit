@@ -1,9 +1,16 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.LogBuilder;
+import org.wahlzeit.utils.PatternInstance;
 
 import java.util.logging.Logger;
 
+
+@PatternInstance(
+		patternName = "Abstract factory",
+		participants = {
+				"ConcreteFactory"
+		})
 public class GuitaristPhotoFactory extends PhotoFactory {
 	@Override
 	public GuitaristPhoto createPhoto() {

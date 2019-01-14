@@ -1,13 +1,14 @@
 package org.wahlzeit.utils;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.SOURCE)
-@Target(ElementType.TYPE)
+@Repeatable(PatternInstances.class)
 public @interface PatternInstance {
     String patternName();
     String[] participants();
+}
+
+@interface PatternInstances {
+    PatternInstance[] value();
 }

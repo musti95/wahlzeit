@@ -1,8 +1,15 @@
 package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Subclass;
+import org.wahlzeit.utils.PatternInstance;
 
 @Subclass(index=true)
+
+@PatternInstance(
+		patternName = "Abstract Factory",
+		participants = {
+				"ConcreteProduct"
+		})
 public class GuitaristPhoto extends Photo {
 	private String guitaristName = "";
 	private String guitar = "";

@@ -25,6 +25,7 @@ import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
 import org.wahlzeit.services.LogBuilder;
+import org.wahlzeit.utils.PatternInstance;
 
 import java.util.logging.Logger;
 
@@ -32,6 +33,10 @@ import java.util.logging.Logger;
  * PhotoUtil provides a set of utility functions to create defined images.
  * Images are created from a source in different sizes as needed by the app.
  */
+@PatternInstance(
+		patternName = "Abstract factory",
+		participants = "Client"
+)
 public class PhotoUtil {
 
 	private static final Logger log = Logger.getLogger(PhotoUtil.class.getName());

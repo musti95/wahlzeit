@@ -33,6 +33,10 @@ import java.util.logging.Logger;
 		participants = {
 				"AbstractFactory", "ConcreteFactory"
 		})
+@PatternInstance(
+		patternName = "Singleton",
+		participants = "Singleton"
+)
 public class PhotoFactory {
 
 	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
