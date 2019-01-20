@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Subclass;
 import org.wahlzeit.utils.PatternInstance;
 
@@ -11,38 +12,29 @@ import org.wahlzeit.utils.PatternInstance;
 				"ConcreteProduct"
 		})
 public class GuitaristPhoto extends Photo {
-	private String guitaristName = "";
-	private String guitar = "";
+	private Guitarist guitarist;
+
 
 	public GuitaristPhoto() {
 		super();
+		guitarist = null;
 	}
 
 	public GuitaristPhoto(Photo photo, String name, String guitar) {
 		super(photo.id, photo.location);
-		this.guitar = guitar;
-		this.guitaristName = name;
+		guitarist = GuitaristManager.getInstance().createGuitarist("solo", name, guitar);
 	}
 
 	public GuitaristPhoto(PhotoId myId, Location location, String name, String guitar) {
 		super(myId, location);
-		this.guitaristName = name;
-		this.guitar = guitar;
+		guitarist = GuitaristManager.getInstance().createGuitarist("solo", name, guitar);
 	}
 
-	public String getGuitaristName() {
-		return guitaristName;
+	public Guitarist getGuitarist() {
+		return guitarist;
 	}
 
-	public void setGuitaristName(String guitaristName) {
-		this.guitaristName = guitaristName;
-	}
-
-	public String getGuitar() {
-		return guitar;
-	}
-
-	public void setGuitar(String guitar) {
-		this.guitar = guitar;
+	public void setGuitarist(Guitarist guitarist) {
+		this.guitarist = guitarist;
 	}
 }

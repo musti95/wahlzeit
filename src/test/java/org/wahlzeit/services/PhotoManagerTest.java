@@ -43,7 +43,11 @@ public class PhotoManagerTest {
     public void testSaveAndLoadGuitaristPhoto() throws Exception {
         PhotoManager pm = PhotoManager.getInstance();
         String photoPath = "src/main/resources/pictures/satriani.jpg";
-        Photo test = pm.createPhoto("guitarist", ImagesServiceFactory.makeImage(Files.readAllBytes(Paths.get(photoPath))), new Location(CartesianCoordinate.getInstance(1, 1, 1), "Test"));
+        Photo test = pm.createPhoto("guitarist", ImagesServiceFactory.makeImage(Files.readAllBytes(Paths.get(photoPath))),
+                new Location(CartesianCoordinate.getInstance(1, 1, 1), "Test"));
+        Guitarist guitarist = GuitaristManager.getInstance().createGuitarist("solo", "satriani", "ibanez");
+        ((GuitaristPhoto) test).setGuitarist(guitarist);
+
         Assert.assertTrue(pm.hasPhoto(test.getId()));
         Assert.assertTrue(pm.getPhoto(test.getId()) instanceof GuitaristPhoto);
 
@@ -61,5 +65,10 @@ public class PhotoManagerTest {
         Location loc = pm.getPhoto(test.getId()).getLocation();
         Assert.assertEquals(CartesianCoordinate.getInstance(0, 0, 0), loc.getCoordinate());
         Assert.assertEquals("Test", loc.getName());
+
+        Guitarist loadedGuitarist = ((GuitaristPhoto) pm.getPhoto(test.getId())).getGuitarist();
+        Assert.assertEquals(guitarist.getType().getName(), loadedGuitarist.getType().getName());
+        Assert.assertEquals(guitarist.getGuitaristName(), loadedGuitarist.getGuitaristName());
+        Assert.assertEquals(guitarist.getGuitar(), loadedGuitarist.getGuitar());
     }
 }
